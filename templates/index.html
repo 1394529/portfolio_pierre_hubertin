@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+{% load static portfolio_tags %}
+
+{% block content %}
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════════ -->
+<section id="hero" class="section" aria-label="Présentation">
+  <div class="container">
+    <div class="hero-content">
+
+      <p class="hero-eyebrow" aria-hidden="true">// Analyste de données — Québec</p>
+
+      <h1 class="hero-name">
+        <span class="first">Pierre</span>
+        <span class="last glow-hover">Hubertin</span>
+      </h1>
+
+      <p class="hero-title">
+        <strong>Data Analyst</strong> —
+        <span class="hero-typed" aria-live="polite">Power BI Expert</span>
+      </p>
+
+      <p class="hero-description">
+        Analyste fonctionnel et architecte de solutions BI avec plus de 20 ans d'expérience
+        en conseil. Je transforme des données brutes en insights décisionnels via des
+        dashboards Power BI performants, des pipelines ETL robustes et une modélisation
+        SQL rigoureuse.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#projets" class="btn btn-neon" aria-label="Voir mes projets">
+          <i class="bi bi-grid-3x3-gap-fill" aria-hidden="true"></i>
+          Voir mes projets
+        </a>
+        <a href="{{ OWNER_GITHUB }}" class="btn btn-outline" target="_blank"
+           rel="noopener noreferrer" aria-label="Profil GitHub (nouvel onglet)">
+          <i class="bi bi-github" aria-hidden="true"></i>
+          GitHub
+        </a>
+        <a href="#contact" class="btn btn-ghost">
+          <i class="bi bi-envelope" aria-hidden="true"></i>
+          Me contacter
+        </a>
+      </div>
+
+      <div class="hero-stack" aria-label="Stack technologique">
+        <p class="hero-stack-label">// Stack principale</p>
+        <div class="stack-icons">
+          {% for tech in "Power BI,DAX,SQL Server,Python,ETL,dbt,PostgreSQL,Jupyter"|split:"," %}
+          <span class="stack-icon">
+            <i class="bi bi-{% if 'Power' in tech %}bar-chart-fill{% elif 'SQL' in tech or 'Post' in tech %}database-fill{% elif 'Python' in tech or 'Jupyter' in tech %}code-slash{% elif 'ETL' in tech or 'dbt' in tech %}arrow-left-right{% else %}tools{% endif %}" aria-hidden="true"></i>
+            {{ tech }}
+          </span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true">
+    <span>scroll</span>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     PROJETS
+══════════════════════════════════════════════════════════ -->
+<section id="projets" class="section" aria-label="Projets">
+  <div class="container">
+    <p class="section-label">// 01. Projets</p>
+    <h2 class="section-title reveal">Réalisations Data &amp; BI</h2>
+    <p class="section-subtitle reveal reveal-delay-1">
+      Sélection de projets illustrant mon expertise en Power BI, modélisation SQL,
+      pipelines ETL et analyses exploratoires de données.
+    </p>
+
+    {% if projects %}
+    <div class="projects-grid" role="list">
+      {% for project in projects %}
+      <article class="project-card reveal reveal-delay-{{ forloop.counter|add:0 }}" role="listitem">
+
+        {% if project.featured %}
+        <span class="featured-badge" aria-label="Projet vedette">⭐ Vedette</span>
+        {% endif %}
+
+        <div class="project-thumbnail" aria-hidden="true">
+          {% if project.thumbnail %}
+            <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}" loading="lazy">
+          {% else %}
+            <div class="project-thumb-placeholder">
+              {% if project.category == 'powerbi' %}📊
+              {% elif project.category == 'python' %}🐍
+              {% elif project.category == 'sql' %}🗄️
+              {% elif project.category == 'ml' %}🤖
+              {% else %}📈{% endif %}
+            </div>
+          {% endif %}
+          <span class="project-category-badge">{{ project.get_category_display }}</span>
+        </div>
+
+        <div class="project-body">
+          <h3 class="project-title">{{ project.title }}</h3>
+          <p class="project-desc">{{ project.short_description }}</p>
+
+          <div class="project-tags" aria-label="Technologies utilisées">
+            {% for tech in project.get_technologies_list %}
+            <span class="tag">{{ tech }}</span>
+            {% endfor %}
+          </div>
+
+          <div class="project-links">
+            {% if project.live_url %}
+            <a href="{{ project.live_url }}" class="project-link primary"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Démonstration live de {{ project.title }}">
+              <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+              Démo live
+            </a>
+            {% endif %}
+            {% if project.github_url %}
+            <a href="{{ project.github_url }}" class="project-link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Code source GitHub de {{ project.title }}">
+              <i class="bi bi-github" aria-hidden="true"></i>
+              Code source
+            </a>
+            {% endif %}
+            <a href="{% url 'core:project_detail' project.slug %}" class="project-link"
+               aria-label="Détails du projet {{ project.title }}">
+              <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              Détails
+            </a>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="mono slate">// Projets à venir — revenez bientôt.</p>
+    {% endif %}
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     COMPÉTENCES
+══════════════════════════════════════════════════════════ -->
+<section id="competences" class="section" aria-label="Compétences techniques">
+  <div class="container">
+    <p class="section-label">// 02. Compétences</p>
+    <h2 class="section-title reveal">Matrice de compétences</h2>
+    <p class="section-subtitle reveal reveal-delay-1">
+      20+ ans d'expérience en analyse fonctionnelle, BI et systèmes de données —
+      avec une spécialisation croissante en IA et machine learning.
+    </p>
+
+    {% if skill_categories %}
+    <div class="skills-grid" role="list">
+      {% for cat in skill_categories %}
+      <div class="skill-category-card reveal reveal-delay-{{ forloop.counter }}" role="listitem">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon" aria-hidden="true">
+            <i class="bi {{ cat.icon|default:'bi-tools' }}"></i>
+          </div>
+          <h3 class="skill-cat-name">{{ cat.name }}</h3>
+        </div>
+
+        <div class="skill-list" role="list">
+          {% for skill in cat.skills.all %}
+          <div class="skill-item" role="listitem">
+            <div class="skill-item-header">
+              <span class="skill-name">{{ skill.name }}</span>
+              <span class="skill-pct" aria-label="{{ skill.percentage }}%">{{ skill.percentage }}%</span>
+            </div>
+            <div class="skill-bar" role="progressbar"
+                 aria-valuenow="{{ skill.percentage }}"
+                 aria-valuemin="0" aria-valuemax="100"
+                 aria-label="{{ skill.name }} — {{ skill.percentage }}%">
+              <div class="skill-bar-fill" data-pct="{{ skill.percentage }}"></div>
+            </div>
+            <div class="skill-stars" aria-label="Niveau {{ skill.level }} sur 5">
+              {% for filled in skill.get_stars %}
+              <span class="star {% if filled %}filled{% endif %}" aria-hidden="true"></span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOG
+══════════════════════════════════════════════════════════ -->
+<section id="blog" class="section" aria-label="Articles techniques">
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem; margin-bottom:clamp(2.5rem,5vw,4rem)">
+      <div>
+        <p class="section-label">// 03. Articles</p>
+        <h2 class="section-title reveal" style="margin-bottom:0.5rem">Insights &amp; analyses</h2>
+        <p class="section-subtitle reveal reveal-delay-1" style="margin-bottom:0">
+          Réflexions sur Power BI, optimisation SQL et architecture de données.
+        </p>
+      </div>
+      <a href="{% url 'core:blog_list' %}" class="btn btn-outline reveal" aria-label="Voir tous les articles">
+        Tous les articles <i class="bi bi-arrow-right" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    {% if recent_posts %}
+    <div class="blog-grid" role="list">
+      {% for post in recent_posts %}
+      <article class="blog-card reveal reveal-delay-{{ forloop.counter }}" role="listitem">
+        <time class="blog-date" datetime="{{ post.published_at|date:'Y-m-d' }}">
+          {{ post.published_at|date:"j F Y" }}
+        </time>
+        <h3 class="blog-title">{{ post.title }}</h3>
+        <p class="blog-excerpt">{{ post.excerpt }}</p>
+        {% if post.get_tags_list %}
+        <div class="blog-tags" aria-label="Tags">
+          {% for tag in post.get_tags_list %}
+          <span class="tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <a href="{% url 'core:blog_detail' post.slug %}" class="blog-read-more"
+           aria-label="Lire l'article : {{ post.title }}">
+          Lire l'article <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="mono slate">// Articles en cours de rédaction — à venir.</p>
+    {% endif %}
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     CONTACT
+══════════════════════════════════════════════════════════ -->
+<section id="contact" class="section" aria-label="Contact">
+  <div class="container">
+    <p class="section-label">// 04. Contact</p>
+    <h2 class="section-title reveal">Travaillons ensemble</h2>
+    <p class="section-subtitle reveal reveal-delay-1">
+      Vous avez un projet BI, un défi de données ou souhaitez discuter d'une opportunité?
+      Je réponds habituellement sous 24h.
+    </p>
+
+    <div class="contact-layout">
+
+      <!-- Info side -->
+      <div class="reveal">
+        <h3>Restons en contact</h3>
+        <p>
+          Disponible pour des mandats de conseil, des projets de reporting financier,
+          des architectures BI ou des postes d'analyste dans la région de Québec/Lévis.
+        </p>
+
+        <div class="contact-details">
+          <div class="contact-detail">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/></svg>
+            <a href="mailto:{{ OWNER_EMAIL }}">{{ OWNER_EMAIL }}</a>
+          </div>
+          <div class="contact-detail">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+            <span>{{ OWNER_LOCATION }}</span>
+          </div>
+        </div>
+
+        <div class="social-links" aria-label="Réseaux professionnels">
+          <a href="{{ OWNER_GITHUB }}" class="social-link" target="_blank" rel="noopener noreferrer"
+             aria-label="GitHub">
+            <i class="bi bi-github" aria-hidden="true"></i>
+          </a>
+          <a href="{{ OWNER_LINKEDIN }}" class="social-link" target="_blank" rel="noopener noreferrer"
+             aria-label="LinkedIn">
+            <i class="bi bi-linkedin" aria-hidden="true"></i>
+          </a>
+          <a href="mailto:{{ OWNER_EMAIL }}" class="social-link" aria-label="Courriel">
+            <i class="bi bi-envelope-fill" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <a href="{{ CV_DOWNLOAD_URL }}" class="btn btn-neon" download
+           aria-label="Télécharger le CV PDF de Pierre Hubertin">
+          <i class="bi bi-file-earmark-pdf" aria-hidden="true"></i>
+          Télécharger mon CV
+        </a>
+      </div>
+
+      <!-- Form side -->
+      <div class="contact-form-wrap reveal reveal-delay-2">
+        <form id="contact-form" method="post" action="{% url 'core:contact_ajax' %}"
+              novalidate aria-label="Formulaire de contact">
+          {% csrf_token %}
+          <!-- Honeypot -->
+          {{ contact_form.website }}
+
+          <div class="form-group">
+            <label class="form-label" for="id_name">Nom complet *</label>
+            <input type="text" name="name" id="id_name" class="form-control{% if contact_form.name.errors %} is-invalid{% endif %}"
+                   placeholder="Votre nom complet" autocomplete="name" required
+                   value="{{ contact_form.name.value|default:'' }}"
+                   aria-required="true" aria-describedby="name-error">
+            <span id="name-error" class="invalid-feedback">
+              {% if contact_form.name.errors %}{{ contact_form.name.errors|join:" " }}{% endif %}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="id_email">Courriel *</label>
+            <input type="email" name="email" id="id_email" class="form-control{% if contact_form.email.errors %} is-invalid{% endif %}"
+                   placeholder="votre@email.com" autocomplete="email" required
+                   value="{{ contact_form.email.value|default:'' }}"
+                   aria-required="true" aria-describedby="email-error">
+            <span id="email-error" class="invalid-feedback">
+              {% if contact_form.email.errors %}{{ contact_form.email.errors|join:" " }}{% endif %}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="id_subject">Sujet *</label>
+            <input type="text" name="subject" id="id_subject" class="form-control{% if contact_form.subject.errors %} is-invalid{% endif %}"
+                   placeholder="Objet de votre message" required
+                   value="{{ contact_form.subject.value|default:'' }}"
+                   aria-required="true" aria-describedby="subject-error">
+            <span id="subject-error" class="invalid-feedback">
+              {% if contact_form.subject.errors %}{{ contact_form.subject.errors|join:" " }}{% endif %}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="id_message">Message *</label>
+            <textarea name="message" id="id_message"
+                      class="form-control{% if contact_form.message.errors %} is-invalid{% endif %}"
+                      rows="6" placeholder="Décrivez votre projet ou votre besoin…" required
+                      aria-required="true" aria-describedby="message-error">{{ contact_form.message.value|default:'' }}</textarea>
+            <span id="message-error" class="invalid-feedback">
+              {% if contact_form.message.errors %}{{ contact_form.message.errors|join:" " }}{% endif %}
+            </span>
+          </div>
+
+          <div class="form-submit-row">
+            <button type="submit" class="btn btn-neon" id="contact-submit">
+              <i class="bi bi-send" aria-hidden="true"></i>
+              Envoyer le message
+            </button>
+            <span id="form-status" class="form-status" role="status" aria-live="polite" style="display:none"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

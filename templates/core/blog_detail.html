@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} — Pierre Hubertin{% endblock %}
+
+{% block content %}
+<div style="padding-top:80px;min-height:100vh;">
+  <div class="container" style="padding-top:3rem;padding-bottom:5rem;max-width:820px;">
+
+    <nav aria-label="Fil d'Ariane" style="margin-bottom:2rem;">
+      <ol style="display:flex;gap:.5rem;list-style:none;font-family:var(--font-mono);font-size:.75rem;color:var(--slate)">
+        <li><a href="{% url 'core:index' %}">Accueil</a></li>
+        <li style="color:var(--carbon-3)"> / </li>
+        <li><a href="{% url 'core:blog_list' %}">Articles</a></li>
+        <li style="color:var(--carbon-3)"> / </li>
+        <li style="color:var(--neon)">{{ post.title|truncatechars:40 }}</li>
+      </ol>
+    </nav>
+
+    <header style="margin-bottom:3rem;">
+      <time style="font-family:var(--font-mono);font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--slate);display:block;margin-bottom:1rem;"
+            datetime="{{ post.published_at|date:'Y-m-d' }}">
+        {{ post.published_at|date:"j F Y" }}
+      </time>
+      <h1 style="font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.2;margin-bottom:1rem;">{{ post.title }}</h1>
+      <p style="color:var(--slate-light);font-size:1.05rem;">{{ post.excerpt }}</p>
+      {% if post.get_tags_list %}
+      <div class="blog-tags" style="margin-top:1rem;">
+        {% for tag in post.get_tags_list %}<span class="tag">{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
+    </header>
+
+    {% if post.cover_image %}
+    <div style="margin-bottom:3rem;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--carbon-3);">
+      <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" style="width:100%;max-height:400px;object-fit:cover;">
+    </div>
+    {% endif %}
+
+    <div style="color:var(--slate-light);line-height:1.9;font-size:.98rem;">
+      {{ post.content|safe }}
+    </div>
+
+    <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--carbon-3);display:flex;gap:1rem;">
+      <a href="{% url 'core:blog_list' %}" class="btn btn-ghost">
+        <i class="bi bi-arrow-left"></i> Tous les articles
+      </a>
+      <a href="{% url 'core:index' %}#contact" class="btn btn-outline">
+        <i class="bi bi-chat"></i> Discuter de cet article
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

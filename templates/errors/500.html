@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}500 — Erreur serveur{% endblock %}
+
+{% block content %}
+<div style="min-height:100vh;display:flex;align-items:center;padding-top:80px;">
+  <div class="container" style="text-align:center;padding:5rem 0;">
+    <p style="font-family:var(--font-mono);font-size:8rem;font-weight:700;color:var(--carbon-3);line-height:1;margin-bottom:0;letter-spacing:-.05em;">500</p>
+    <p style="font-family:var(--font-mono);font-size:.85rem;color:var(--danger);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5rem;">
+      // Erreur interne du serveur
+    </p>
+    <h1 style="font-size:clamp(1.5rem,4vw,2.5rem);margin-bottom:1rem;">Quelque chose s'est mal passé</h1>
+    <p style="color:var(--slate-light);max-width:45ch;margin:0 auto 2.5rem;">
+      Une erreur inattendue s'est produite côté serveur. L'équipe a été notifiée.
+      Veuillez réessayer dans quelques instants.
+    </p>
+    <a href="{% url 'core:index' %}" class="btn btn-neon">
+      <i class="bi bi-house"></i> Retour à l'accueil
+    </a>
+    <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--slate);margin-top:3rem;opacity:.5;">
+      <span style="color:var(--danger)">ERROR</span> 500 Internal Server Error — Traceback logged
+    </p>
+  </div>
+</div>
+{% endblock %}

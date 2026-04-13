@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} — Pierre Hubertin{% endblock %}
+
+{% block content %}
+<div style="padding-top: 80px; min-height: 100vh;">
+  <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Fil d'Ariane" style="margin-bottom:2rem;">
+      <ol style="display:flex;gap:.5rem;list-style:none;font-family:var(--font-mono);font-size:.75rem;color:var(--slate)">
+        <li><a href="{% url 'core:index' %}">Accueil</a></li>
+        <li aria-hidden="true" style="color:var(--carbon-3)"> / </li>
+        <li><a href="{% url 'core:index' %}#projets">Projets</a></li>
+        <li aria-hidden="true" style="color:var(--carbon-3)"> / </li>
+        <li style="color:var(--neon)">{{ project.title|truncatechars:40 }}</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header style="margin-bottom:3rem;">
+      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--neon);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem;display:block;">
+        {{ project.get_category_display }}
+      </span>
+      <h1 style="font-size:clamp(1.8rem,5vw,3rem);margin-bottom:1rem;max-width:22ch;">{{ project.title }}</h1>
+      <p style="color:var(--slate-light);max-width:65ch;font-size:1.05rem;margin-bottom:2rem;">
+        {{ project.short_description }}
+      </p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:.75rem;">
+        {% if project.live_url %}
+        <a href="{{ project.live_url }}" class="btn btn-neon" target="_blank" rel="noopener noreferrer">
+          <i class="bi bi-box-arrow-up-right"></i> Démonstration live
+        </a>
+        {% endif %}
+        {% if project.github_url %}
+        <a href="{{ project.github_url }}" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+          <i class="bi bi-github"></i> Code source
+        </a>
+        {% endif %}
+        <a href="{% url 'core:index' %}#projets" class="btn btn-ghost">
+          <i class="bi bi-arrow-left"></i> Retour aux projets
+        </a>
+      </div>
+    </header>
+
+    <!-- Thumbnail -->
+    {% if project.thumbnail %}
+    <div style="margin-bottom:3rem;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--carbon-3);">
+      <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}"
+           style="width:100%;max-height:500px;object-fit:cover;">
+    </div>
+    {% endif %}
+
+    <div style="display:grid;grid-template-columns:1fr 280px;gap:3rem;align-items:start;">
+
+      <!-- Long description -->
+      <div>
+        <h2 style="font-size:1.3rem;margin-bottom:1.25rem;color:var(--neon);">
+          <span class="mono">// </span>À propos de ce projet
+        </h2>
+        <div style="color:var(--slate-light);line-height:1.8;font-size:.95rem;">
+          {{ project.long_description|linebreaks }}
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside style="background:var(--carbon-2);border:1px solid var(--carbon-3);border-radius:var(--radius-lg);padding:1.5rem;position:sticky;top:100px;">
+        <h3 style="font-family:var(--font-mono);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--slate);margin-bottom:1.25rem;">
+          Technologies
+        </h3>
+        <div class="project-tags" style="margin-bottom:1.5rem;">
+          {% for tech in project.get_technologies_list %}
+          <span class="tag">{{ tech }}</span>
+          {% endfor %}
+        </div>
+
+        <h3 style="font-family:var(--font-mono);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--slate);margin-bottom:.75rem;">
+          Catégorie
+        </h3>
+        <p style="font-family:var(--font-mono);font-size:.82rem;color:var(--neon);margin-bottom:1.5rem;">
+          {{ project.get_category_display }}
+        </p>
+
+        {% if project.featured %}
+        <div style="padding:.5rem .75rem;background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.2);border-radius:var(--radius);font-family:var(--font-mono);font-size:.72rem;color:var(--neon);text-align:center;">
+          ⭐ Projet vedette
+        </div>
+        {% endif %}
+      </aside>
+    </div>
+
+    <!-- Related projects -->
+    {% if related_projects %}
+    <div style="margin-top:5rem;">
+      <h2 style="font-family:var(--font-mono);font-size:1.1rem;color:var(--white);margin-bottom:2rem;">
+        <span style="color:var(--neon)">// </span>Projets similaires
+      </h2>
+      <div class="projects-grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));">
+        {% for rp in related_projects %}
+        <article class="project-card">
+          <div class="project-thumbnail">
+            <div class="project-thumb-placeholder">📊</div>
+            <span class="project-category-badge">{{ rp.get_category_display }}</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">{{ rp.title }}</h3>
+            <p class="project-desc">{{ rp.short_description|truncatechars:120 }}</p>
+            <div class="project-links">
+              <a href="{% url 'core:project_detail' rp.slug %}" class="project-link primary">
+                <i class="bi bi-arrow-right"></i> Voir
+              </a>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ page_title|default:"Pierre Hubertin — Data Analyst" }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_desc %}{{ meta_description|default:'Analyste de données Power BI, SQL, ETL et reporting financier — Québec' }}{% endblock %}">
+  <meta name="author" content="Pierre Hubertin">
+  <meta property="og:title" content="{% block og_title %}Pierre Hubertin — Data Analyst{% endblock %}">
+  <meta property="og:description" content="{% block og_desc %}{{ meta_description|default:'Analyste de données Power BI & SQL — Québec' }}{% endblock %}">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+  <!-- Icons -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230A0F0D'/><text y='24' font-size='22' fill='%2300FF88'>▐</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Main CSS -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────────────────────────── -->
+<nav class="navbar" role="navigation" aria-label="Navigation principale">
+  <div class="container navbar-inner">
+    <a href="{% url 'core:index' %}#hero" class="navbar-brand" aria-label="Accueil Pierre Hubertin">
+      <span>ph</span><span class="neon">.</span><span>dev</span>
+      <span class="cursor" aria-hidden="true"></span>
+    </a>
+
+    <ul class="navbar-links" id="nav-menu" role="list">
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#blog">Articles</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="navbar-cta">
+      <a href="{{ CV_DOWNLOAD_URL }}" class="btn btn-outline btn-sm" download aria-label="Télécharger le CV de Pierre Hubertin">
+        <i class="bi bi-download" aria-hidden="true"></i> CV
+      </a>
+    </div>
+
+    <button class="menu-toggle" id="menu-toggle" aria-controls="nav-menu"
+            aria-expanded="false" aria-label="Ouvrir le menu de navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── Django Messages ──────────────────────────────────────────────────────── -->
+{% if messages %}
+<div class="messages-container" role="region" aria-live="polite" aria-label="Notifications">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags|default:'info' }}" role="alert">
+    <i class="bi bi-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %}" aria-hidden="true"></i>
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- ── Main Content ─────────────────────────────────────────────────────────── -->
+<main id="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────────── -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">{{ OWNER_NAME }}</div>
+        <p class="footer-tagline">Data Analyst — Power BI | SQL<br>Québec, Canada</p>
+      </div>
+      <nav class="footer-nav" aria-label="Navigation pied de page">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#projets">Projets</a></li>
+          <li><a href="#competences">Compétences</a></li>
+          <li><a href="#blog">Articles</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="footer-connect">
+        <h4>Liens</h4>
+        <a href="{{ OWNER_GITHUB }}" class="btn btn-ghost btn-sm" target="_blank" rel="noopener noreferrer"
+           aria-label="Profil GitHub Pierre Hubertin">
+          <i class="bi bi-github" aria-hidden="true"></i> GitHub
+        </a>
+        <a href="{{ OWNER_LINKEDIN }}" class="btn btn-ghost btn-sm" target="_blank" rel="noopener noreferrer"
+           aria-label="Profil LinkedIn Pierre Hubertin">
+          <i class="bi bi-linkedin" aria-hidden="true"></i> LinkedIn
+        </a>
+        <a href="{{ CV_DOWNLOAD_URL }}" class="btn btn-neon btn-sm" download
+           aria-label="Télécharger CV PDF">
+          <i class="bi bi-file-earmark-pdf" aria-hidden="true"></i> Télécharger CV
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        © {% now "Y" %} <span class="neon">{{ OWNER_NAME }}</span>.
+        Conçu &amp; développé avec <span class="neon">♥</span> — Québec, Canada
+      </p>
+      <p class="footer-copy mono">
+        <span class="neon">$</span> python manage.py runserver
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Scripts ──────────────────────────────────────────────────────────────── -->
+{% load static %}
+<script src="{% static 'js/main.js' %}" defer></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

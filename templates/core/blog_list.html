@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Articles — Pierre Hubertin{% endblock %}
+
+{% block content %}
+<div style="padding-top:80px;min-height:100vh;">
+  <div class="container" style="padding-top:3rem;padding-bottom:5rem;">
+
+    <p class="section-label">// Articles</p>
+    <h1 class="section-title" style="margin-bottom:.75rem;">Insights &amp; analyses</h1>
+    <p class="section-subtitle">
+      Réflexions techniques sur Power BI, SQL, ETL et l'architecture de solutions BI.
+    </p>
+
+    {% if posts %}
+    <div class="blog-grid" role="list">
+      {% for post in posts %}
+      <article class="blog-card reveal" role="listitem">
+        <time class="blog-date" datetime="{{ post.published_at|date:'Y-m-d' }}">
+          {{ post.published_at|date:"j F Y" }}
+        </time>
+        <h2 class="blog-title" style="font-size:.95rem;">{{ post.title }}</h2>
+        <p class="blog-excerpt">{{ post.excerpt }}</p>
+        {% if post.get_tags_list %}
+        <div class="blog-tags">
+          {% for tag in post.get_tags_list %}<span class="tag">{{ tag }}</span>{% endfor %}
+        </div>
+        {% endif %}
+        <a href="{% url 'core:blog_detail' post.slug %}" class="blog-read-more">
+          Lire <i class="bi bi-arrow-right"></i>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="mono slate">// Aucun article pour l'instant.</p>
+    {% endif %}
+
+    <div style="margin-top:3rem;">
+      <a href="{% url 'core:index' %}" class="btn btn-ghost">
+        <i class="bi bi-arrow-left"></i> Retour à l'accueil
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

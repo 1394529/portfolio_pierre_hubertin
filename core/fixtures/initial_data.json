@@ -1,0 +1,190 @@
+[
+  {
+    "model": "core.skillcategory",
+    "pk": 1,
+    "fields": {"name": "Business Intelligence", "icon": "bi-bar-chart-fill", "order": 1}
+  },
+  {
+    "model": "core.skillcategory",
+    "pk": 2,
+    "fields": {"name": "Bases de données", "icon": "bi-database-fill", "order": 2}
+  },
+  {
+    "model": "core.skillcategory",
+    "pk": 3,
+    "fields": {"name": "Langages & ETL", "icon": "bi-code-slash", "order": 3}
+  },
+  {
+    "model": "core.skillcategory",
+    "pk": 4,
+    "fields": {"name": "Analyse & Méthodes", "icon": "bi-clipboard-data", "order": 4}
+  },
+  {
+    "model": "core.skill",
+    "pk": 1,
+    "fields": {"category": 1, "name": "Power BI", "level": 5, "percentage": 95, "icon_class": "powerbi", "order": 1}
+  },
+  {
+    "model": "core.skill",
+    "pk": 2,
+    "fields": {"category": 1, "name": "DAX", "level": 5, "percentage": 92, "icon_class": "dax", "order": 2}
+  },
+  {
+    "model": "core.skill",
+    "pk": 3,
+    "fields": {"category": 1, "name": "Tableau", "level": 3, "percentage": 68, "icon_class": "tableau", "order": 3}
+  },
+  {
+    "model": "core.skill",
+    "pk": 4,
+    "fields": {"category": 2, "name": "SQL Server (T-SQL)", "level": 5, "percentage": 94, "icon_class": "sql", "order": 1}
+  },
+  {
+    "model": "core.skill",
+    "pk": 5,
+    "fields": {"category": 2, "name": "PostgreSQL", "level": 4, "percentage": 82, "icon_class": "postgresql", "order": 2}
+  },
+  {
+    "model": "core.skill",
+    "pk": 6,
+    "fields": {"category": 2, "name": "Modélisation dimensionnelle", "level": 5, "percentage": 90, "icon_class": "model", "order": 3}
+  },
+  {
+    "model": "core.skill",
+    "pk": 7,
+    "fields": {"category": 3, "name": "Python (pandas, numpy)", "level": 4, "percentage": 85, "icon_class": "python", "order": 1}
+  },
+  {
+    "model": "core.skill",
+    "pk": 8,
+    "fields": {"category": 3, "name": "ETL / Pipelines de données", "level": 4, "percentage": 83, "icon_class": "etl", "order": 2}
+  },
+  {
+    "model": "core.skill",
+    "pk": 9,
+    "fields": {"category": 3, "name": "dbt", "level": 3, "percentage": 65, "icon_class": "dbt", "order": 3}
+  },
+  {
+    "model": "core.skill",
+    "pk": 10,
+    "fields": {"category": 4, "name": "Analyse fonctionnelle (CBAP)", "level": 5, "percentage": 93, "icon_class": "analysis", "order": 1}
+  },
+  {
+    "model": "core.skill",
+    "pk": 11,
+    "fields": {"category": 4, "name": "KPI & Reporting financier", "level": 5, "percentage": 96, "icon_class": "kpi", "order": 2}
+  },
+  {
+    "model": "core.skill",
+    "pk": 12,
+    "fields": {"category": 4, "name": "Machine Learning (scikit-learn)", "level": 3, "percentage": 70, "icon_class": "ml", "order": 3}
+  },
+  {
+    "model": "core.project",
+    "pk": 1,
+    "fields": {
+      "title": "Dashboard KPI Financier — Secteur Bancaire",
+      "slug": "dashboard-kpi-financier-bancaire",
+      "category": "powerbi",
+      "short_description": "Tableau de bord Power BI consolidant 12 KPI financiers critiques pour le suivi de portefeuille de crédit. Réduction de 60% du temps de reporting mensuel.",
+      "long_description": "Conception d'un dashboard interactif Power BI intégrant des données de 3 systèmes sources via des pipelines ETL automatisés. Modèle en étoile optimisé, mesures DAX avancées avec intelligence temporelle, et distribution automatisée via Power BI Service.",
+      "technologies": "Power BI, DAX, SQL Server, Power Query, SSAS",
+      "thumbnail": "",
+      "live_url": "https://app.powerbi.com/placeholder",
+      "github_url": "https://github.com/pierre-hubertin/kpi-financier",
+      "featured": true,
+      "order": 1,
+      "status": "published",
+      "created_at": "2024-11-01T00:00:00Z",
+      "updated_at": "2024-11-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.project",
+    "pk": 2,
+    "fields": {
+      "title": "Pipeline ETL — Analyse Crédit (German Credit Dataset)",
+      "slug": "pipeline-etl-analyse-credit",
+      "category": "python",
+      "short_description": "Pipeline Python/Jupyter complet : EDA, nettoyage de données et feature engineering produisant un dataset 44 colonnes prêt pour la modélisation ML.",
+      "long_description": "Analyse exploratoire exhaustive du German Credit Dataset incluant détection d'outliers, imputation de valeurs manquantes, encodage des variables catégorielles et création de features dérivées. Pipeline reproductible et documenté.",
+      "technologies": "Python, pandas, numpy, matplotlib, seaborn, Jupyter",
+      "thumbnail": "",
+      "live_url": "",
+      "github_url": "https://github.com/pierre-hubertin/german-credit-etl",
+      "featured": true,
+      "order": 2,
+      "status": "published",
+      "created_at": "2025-01-15T00:00:00Z",
+      "updated_at": "2025-01-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.project",
+    "pk": 3,
+    "fields": {
+      "title": "Analyse World Happiness Report — Power BI",
+      "slug": "world-happiness-report-powerbi",
+      "category": "powerbi",
+      "short_description": "Visualisation interactive du rapport mondial sur le bonheur : comparaisons régionales, corrélations PIB/bonheur, tendances temporelles 2015-2024.",
+      "long_description": "Projet académique (SIO-6058, Université Laval) : nettoyage Python/pandas des données CSV, enrichissement avec colonnes dérivées (continent, groupe revenu, variation YoY), modèle Power BI avec mesures DAX avancées.",
+      "technologies": "Power BI, DAX, Python, pandas, CSV",
+      "thumbnail": "",
+      "live_url": "",
+      "github_url": "https://github.com/pierre-hubertin/world-happiness-bi",
+      "featured": false,
+      "order": 3,
+      "status": "published",
+      "created_at": "2025-03-01T00:00:00Z",
+      "updated_at": "2025-03-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.blogpost",
+    "pk": 1,
+    "fields": {
+      "title": "Optimiser ses rapports financiers Power BI : les 5 erreurs DAX à éviter",
+      "slug": "optimiser-rapports-financiers-powerbi-erreurs-dax",
+      "excerpt": "Après des centaines d'heures de développement Power BI en contexte financier, voici les pièges DAX les plus coûteux — et comment les éviter pour des dashboards performants.",
+      "content": "<p>Article complet à venir...</p>",
+      "tags": "Power BI, DAX, Performance, Reporting financier",
+      "cover_image": "",
+      "status": "published",
+      "published_at": "2025-02-10T00:00:00Z",
+      "created_at": "2025-02-10T00:00:00Z",
+      "updated_at": "2025-02-10T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.blogpost",
+    "pk": 2,
+    "fields": {
+      "title": "ETL vs ELT en 2025 : quel paradigme pour vos pipelines BI?",
+      "slug": "etl-vs-elt-2025-pipelines-bi",
+      "excerpt": "L'avènement des entrepôts cloud modernes bouleverse les architectures data. Analyse comparative des deux approches pour choisir la bonne stratégie selon votre contexte.",
+      "content": "<p>Article complet à venir...</p>",
+      "tags": "ETL, ELT, Data Engineering, dbt, Architecture",
+      "cover_image": "",
+      "status": "published",
+      "published_at": "2025-03-05T00:00:00Z",
+      "created_at": "2025-03-05T00:00:00Z",
+      "updated_at": "2025-03-05T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.blogpost",
+    "pk": 3,
+    "fields": {
+      "title": "Automatisation IA avec n8n et Claude : retour d'expérience",
+      "slug": "automatisation-ia-n8n-claude-retour-experience",
+      "excerpt": "Construction d'un système de publication LinkedIn automatisé (12 thèmes, détection de doublons, scoring qualité) — architecture, défis et résultats après 30 jours.",
+      "content": "<p>Article complet à venir...</p>",
+      "tags": "n8n, IA, Automatisation, LinkedIn, Claude AI",
+      "cover_image": "",
+      "status": "published",
+      "published_at": "2025-04-01T00:00:00Z",
+      "created_at": "2025-04-01T00:00:00Z",
+      "updated_at": "2025-04-01T00:00:00Z"
+    }
+  }
+]
